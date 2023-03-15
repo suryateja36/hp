@@ -129,17 +129,28 @@ class _MyRegisterState extends State<MyRegister> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
-                                '                 Sign Up',
+                                                 'Sign Up',
                                 style: TextStyle(
                                     color: Colors.black,
+
                                     fontSize: 27,
                                     fontWeight: FontWeight.w700),
                               ),
+                              CircleAvatar(
+                                radius: 30,
+                                backgroundColor: const Color(0xff4c505b),
+                                child: IconButton(
+                                    color: Colors.white,
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.arrow_forward,
+                                    )),
+                              )
 
                             ],
                           ),
                           const SizedBox(
-                            height: 30,
+                            height: 60,
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -180,7 +191,9 @@ class _MyRegisterState extends State<MyRegister> {
                                   image: AssetImage('assets/fb.jpg'),
                                   width: 40.0,
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pushNamed(context, 'fb');
+                                },
                                 label: const Text(
                                   'continue With Facebook',
                                   style: TextStyle(
@@ -192,29 +205,7 @@ class _MyRegisterState extends State<MyRegister> {
                               )
                             ],
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              OutlinedButton.icon(
-                                icon: const Image(
-                                  image: AssetImage('assets/insta.png'),
-                                  width: 40.0,
-                                ),
-                                onPressed: () {},
-                                label: const Text(
-                                  'Continue With Instagram',
-                                  style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              )
-                            ],
-                          ),
+
                         ],
                       ),
                     )

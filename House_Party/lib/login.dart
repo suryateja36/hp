@@ -69,12 +69,22 @@ class _MyLoginState extends State<MyLogin> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
-                                '               LogIn',
+                                ' LogIn',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 30,
                                     fontWeight: FontWeight.w700),
                               ),
+                              CircleAvatar(
+                                radius: 30,
+                                backgroundColor: const Color(0xff4c505b),
+                                child: IconButton(
+                                    color: Colors.white,
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.arrow_forward,
+                                    )),
+                              )
 
                             ],
                           ),
