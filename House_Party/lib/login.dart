@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class MyLogin extends StatefulWidget {
@@ -8,6 +9,32 @@ class MyLogin extends StatefulWidget {
 }
 
 class _MyLoginState extends State<MyLogin> {
+  late String UserEmail, UserPassword;
+
+
+  getUserEmail(email) {
+    UserEmail = email;
+  }
+  getUserPassword(password) {
+    UserPassword = password;
+  }
+
+  LoginAccount() {
+    print("Login Successful");
+    DocumentReference documentReference =
+    FirebaseFirestore.instance.collection('LoginData').doc(UserEmail);
+
+    //create map
+    Map<String, dynamic> students = {
+      "email": UserEmail,
+      "createpassword": UserPassword,
+
+    };
+
+    documentReference
+        .set(students)
+        .whenComplete(() => {print("$UserEmail Created")});
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,8 +50,10 @@ class _MyLoginState extends State<MyLogin> {
               padding: const EdgeInsets.only(left: 15, top: 90),
               child: const Text(
                 '𝐄𝐧𝐣𝐨𝐲 𝐓𝐡𝐞 𝐖𝐚𝐲 𝐔 𝐖𝐚𝐧𝐭',
-                style: TextStyle(color: Colors.black, fontSize: 50,
-                fontWeight: FontWeight.w900),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 50,
+                    fontWeight: FontWeight.w900),
               ),
             ),
             SingleChildScrollView(
@@ -38,29 +67,41 @@ class _MyLoginState extends State<MyLogin> {
                       margin: const EdgeInsets.only(left: 30, right: 30),
                       child: Column(
                         children: [
-                          TextField(
-                            style: const TextStyle(color: Colors.black),
-                            decoration: InputDecoration(
-                                fillColor: Colors.grey.shade100,
-                                filled: true,
-                                hintText: "Email",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              style: const TextStyle(color: Colors.black),
+                              decoration: InputDecoration(
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  hintText: "Email",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                                onChanged: (String email) {
+                                  getUserEmail(email);
+                                },
+                            ),
                           ),
                           const SizedBox(
                             height: 40,
                           ),
-                          TextField(
-                            style: const TextStyle(),
-                            obscureText: true,
-                            decoration: InputDecoration(
-                                fillColor: Colors.grey.shade100,
-                                filled: true,
-                                hintText: "Password",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              style: const TextStyle(),
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  hintText: "Password",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                              onChanged: (String password) {
+                                getUserPassword(password);
+                              },
+                            ),
                           ),
                           const SizedBox(
                             height: 40,
@@ -80,12 +121,13 @@ class _MyLoginState extends State<MyLogin> {
                                 backgroundColor: const Color(0xff4c505b),
                                 child: IconButton(
                                     color: Colors.white,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      LoginAccount();
+                                    },
                                     icon: const Icon(
                                       Icons.arrow_forward,
                                     )),
                               )
-
                             ],
                           ),
                           const SizedBox(
@@ -106,7 +148,7 @@ class _MyLoginState extends State<MyLogin> {
                                       decoration: TextDecoration.underline,
                                       color: Colors.black,
                                       fontSize: 18,
-                                  fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                               TextButton(
@@ -117,7 +159,8 @@ class _MyLoginState extends State<MyLogin> {
                                       decoration: TextDecoration.underline,
                                       color: Colors.black,
                                       fontSize: 18,
-                                        fontWeight: FontWeight.bold,),
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   )),
                             ],
                           )

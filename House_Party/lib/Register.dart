@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -5,12 +6,46 @@ import 'package:google_sign_in/google_sign_in.dart';
 class MyRegister extends StatefulWidget {
   const MyRegister({Key? key}) : super(key: key);
 
+
   @override
   _MyRegisterState createState() => _MyRegisterState();
+
 }
 
 class _MyRegisterState extends State<MyRegister> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  late String customerName, customerEmail, customerPassword;
+
+  getCustomerName(name) {
+    customerName = name;
+  }
+
+  getCustomerEmail(email) {
+    customerEmail = email;
+  }
+
+  getCustomerPassword(password) {
+    customerPassword = password;
+  }
+
+  createAccount() {
+    print("Account Created");
+    DocumentReference documentReference =
+    FirebaseFirestore.instance.collection('SignUpData').doc(customerName);
+
+    //create map
+    Map<String, dynamic> students = {
+      "name": customerName,
+      "email": customerEmail,
+      "createpassword": customerPassword,
+
+    };
+
+    documentReference
+        .set(students)
+        .whenComplete(() => {print("$customerName Created")});
+  }
+
 
 
   @override
@@ -46,81 +81,99 @@ class _MyRegisterState extends State<MyRegister> {
                       margin: const EdgeInsets.only(left: 35, right: 35),
                       child: Column(
                         children: [
-                          TextField(
-                            style: const TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              fillColor: Colors.white,
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Colors.white,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              style: const TextStyle(color: Colors.black),
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: const BorderSide(
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: const BorderSide(
+                                      color: Colors.black,
+                                    ),
                                   ),
-                                ),
-                                hintText: "Name",
-                                hintStyle: const TextStyle(color: Colors.black),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
+                                  hintText: "Name",
+                                  hintStyle: const TextStyle(color: Colors.black),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                              onChanged: (String name) {
+                                getCustomerName(name);
+                              },
+                            ),
                           ),
                           const SizedBox(
                             height: 20,
                           ),
-                          TextField(
-                            style: const TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Colors.white,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              style: const TextStyle(color: Colors.black),
+                              decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: const BorderSide(
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: const BorderSide(
+                                      color: Colors.black,
+                                    ),
                                   ),
-                                ),
-                                hintText: "Email",
-                                hintStyle: const TextStyle(color: Colors.black),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
+                                  hintText: "Email",
+                                  hintStyle: const TextStyle(color: Colors.black),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                              onChanged: (String email) {
+                                getCustomerEmail(email);
+                              },
+                            ),
                           ),
                           const SizedBox(
                             height: 20,
                           ),
-                          TextField(
-                            style: const TextStyle(color: Colors.white),
-                            obscureText: true,
-                            decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Colors.white,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              style: const TextStyle(color: Colors.black),
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: const BorderSide(
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: const BorderSide(
+                                      color: Colors.black,
+                                    ),
                                   ),
-                                ),
-                                hintText: "Create Password",
-                                hintStyle: const TextStyle(color: Colors.black),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
+                                  hintText: "Create Password",
+                                  hintStyle: const TextStyle(color: Colors.black),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                              onChanged: (String password) {
+                                getCustomerPassword(password);
+                              },
+                            ),
                           ),
                           const SizedBox(
                             height: 20,
@@ -141,14 +194,19 @@ class _MyRegisterState extends State<MyRegister> {
                                 backgroundColor: const Color(0xff4c505b),
                                 child: IconButton(
                                     color: Colors.white,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      createAccount();
+                                    },
                                     icon: const Icon(
                                       Icons.arrow_forward,
                                     )),
+
                               )
+
 
                             ],
                           ),
+
                           const SizedBox(
                             height: 60,
                           ),
